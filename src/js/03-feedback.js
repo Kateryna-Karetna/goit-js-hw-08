@@ -6,16 +6,15 @@ const dataObj = {};
 
 onCheckStorage();
 
-form.addEventListener('input', throttle((evt) => {
+form.addEventListener('input', throttle(onCreateLocalStorage, 500));
+
+function onCreateLocalStorage(evt) {
     dataObj[evt.target.name] = evt.target.value;
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataObj));
-}, 500));
+};
 
 form.addEventListener('submit', evt => {
     evt.preventDefault();
-
-    const formData = new FormData(form);
-    formData.forEach((value, name) => localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataObj)));
     evt.currentTarget.reset();
     console.log(dataObj);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
